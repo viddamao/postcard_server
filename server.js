@@ -3,7 +3,7 @@ var express = require("express"),
     mongodb = require("mongodb"),
     ObjectID = mongodb.ObjectID,
     POSTCARDS_COLLECTION = 'postcards',
-CATEGORIES_COLLECTION = 'categories';
+    CATEGORIES_COLLECTION = 'categories';
 
 var app = express();
 app.use(bodyParser.json());
@@ -28,12 +28,19 @@ function handleError(res, reason, message, code) {
     res.status(code || 500).json({ "error": message });
 }
 
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 /*  "/api/postcards"
  *    GET: finds all postcards
  *    POST: creates a new postcard
  */
 
-app.get("/api/postcards", function(req, res) {
+app.get("/api/postcards", function(req, res, next) {
     db.collection(POSTCARDS_COLLECTION).find({}).toArray(function(err, cards) {
         if (err) {
             handleError(res, err.message, "Failed to get postcards.");
@@ -43,9 +50,9 @@ app.get("/api/postcards", function(req, res) {
     });
 });
 
-app.post("/api/postcards", function(req, res) {});
+app.post("/api/postcards", function(req, res, next) {});
 
-app.get("/api/categories", function(req, res) {
+app.get("/api/categories", function(req, res, next) {
     db.collection(CATEGORIES_COLLECTION).find({}).toArray(function(err, categories) {
         if (err) {
             handleError(res, err.message, "Failed to get categories.");
@@ -55,5 +62,4 @@ app.get("/api/categories", function(req, res) {
     });
 });
 
-app.post("/api/categories", function(req, res) {});
-
+app.post("/api/categories", function(req, res, next) {});
