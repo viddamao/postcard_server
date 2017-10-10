@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/viddamao/postcard_server/issues"
   },
-  "homepage": "https://github.com/viddamao/postcard_server#readme"
+  "homepage": "https://github.com/viddamao/postcard_server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "mongodb": "^2.2.31"
+  }
 }

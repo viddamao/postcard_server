@@ -4,26 +4,12 @@ var express = require("express"),
     ObjectID = mongodb.ObjectID,
     POSTCARDS_COLLECTION = 'postcards';
 
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').load();
-}
 
 var app = express();
 app.use(bodyParser.json());
 
-let ENV = {
-    MLAB_API_KEY: process.env.MLAB_API_KEY || "7NUQeWATWY1yb9jPVH46mffYWOEkCcMj",
-    MLAB_URI: process.env.MLAB_URI || "https://api.mlab.com/api/1/ds155674/postcards/",
-    MLAB_URL: process.env.MLAB_URL || "mongodb://viddamao:9075303364lGKD@ds155674.mlab.com:55674/postcards"
-};
-
-console.log(process.env)
-
-var mongodb = require('mongodb');
-console.log(ENV['MLAB_URL'])
-var url = ENV['MLAB_URL'];
 var db;
-mongodb.MongoClient.connect(url, function(err, database) {
+mongodb.MongoClient.connect(process.env.MLAB_URL, function(err, database) {
 
     if (err) throw err;
     db = database;
