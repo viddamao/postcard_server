@@ -2,8 +2,8 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     mongodb = require("mongodb"),
     ObjectID = mongodb.ObjectID,
-    POSTCARDS_COLLECTION = 'postcards';
-
+    POSTCARDS_COLLECTION = 'postcards',
+CATEGORIES_COLLECTION = 'categories';
 
 var app = express();
 app.use(bodyParser.json());
@@ -44,3 +44,16 @@ app.get("/api/postcards", function(req, res) {
 });
 
 app.post("/api/postcards", function(req, res) {});
+
+app.get("/api/categories", function(req, res) {
+    db.collection(CATEGORIES_COLLECTION).find({}).toArray(function(err, categories) {
+        if (err) {
+            handleError(res, err.message, "Failed to get categories.");
+        } else {
+            res.status(200).json(categories);
+        }
+    });
+});
+
+app.post("/api/categories", function(req, res) {});
+
